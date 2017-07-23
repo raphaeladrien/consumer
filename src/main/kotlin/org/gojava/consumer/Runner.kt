@@ -12,7 +12,6 @@ import java.util.concurrent.atomic.AtomicInteger
 class Runner : CommandLineRunner {
 
     val queue:String = "hello"
-    var taskCount: AtomicInteger = AtomicInteger()
 
     override fun run(args:Array<String>) {
         val channel = connectChannel()
