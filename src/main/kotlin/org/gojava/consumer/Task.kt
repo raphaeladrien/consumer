@@ -1,21 +1,21 @@
 package org.gojava.consumer
 
 import com.rabbitmq.client.Channel
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Scope
+import org.springframework.stereotype.Component
 import java.util.*
 
-class Task(worker: Worker, tag: Long, channel: Channel, body: ByteArray?) : Runnable {
+class Task(tag: Long, channel: Channel, body: ByteArray?): Runnable {
 
     val channel: Channel = channel
     val tag: Long = tag
-    val worker: Worker = worker
     val body: ByteArray? = body
 
-
     override fun run() = try {
-        worker.taskCount.incrementAndGet()
-
         val time: Long = System.currentTimeMillis()
         val threadName: String = Thread.currentThread().name
+
         var msg: String = "Empty"
 
         println("$threadName started")
@@ -41,8 +41,5 @@ class Task(worker: Worker, tag: Long, channel: Channel, body: ByteArray?) : Runn
             }
             else -> throw ex
         }
-    } finally {
-        worker.taskCount.decrementAndGet()
     }
-
 }

@@ -9,10 +9,9 @@ import java.util.concurrent.atomic.AtomicInteger
 
 
 class Worker(prefetch:Int, poolExecutor: ThreadPoolExecutor,
-             channel:Channel, queue:String, taskCount:AtomicInteger) : DefaultConsumer(channel) {
+             channel:Channel, queue:String) : DefaultConsumer(channel) {
 
     val poolExecutor = poolExecutor
-    val taskCount = taskCount
 
     init{
         channel.basicQos( prefetch )
@@ -22,7 +21,7 @@ class Worker(prefetch:Int, poolExecutor: ThreadPoolExecutor,
     override fun handleDelivery(consumerTag: String?, envelope: Envelope?, properties: AMQP.BasicProperties?,
                                 body: ByteArray?) {
 
-        val task:Runnable = Task(this, envelope!!.deliveryTag, channel, body )
+        val task:Runnable = Task(envelope!!.deliveryTag, channel, body )
         poolExecutor.execute( task )
     }
 }

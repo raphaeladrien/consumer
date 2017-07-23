@@ -17,10 +17,10 @@ class Runner : CommandLineRunner {
         val channel = connectChannel()
 
         val threadFactory: ThreadFactory = Executors.defaultThreadFactory()
-        val poolExecutor: ThreadPoolExecutor = ThreadPoolExecutor(5, 10, 10_000,
+        val poolExecutor: ThreadPoolExecutor = ThreadPoolExecutor(5, 10, 10_000L,
                 TimeUnit.SECONDS, ArrayBlockingQueue<Runnable>(5), threadFactory)
 
-        Worker(1, poolExecutor,  channel, queue, taskCount )
+        Worker(1, poolExecutor,  channel, queue )
     }
 
     fun connectChannel() : Channel {
