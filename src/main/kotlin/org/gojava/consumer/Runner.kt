@@ -18,7 +18,7 @@ class Runner : CommandLineRunner {
 
         val threadFactory: ThreadFactory = Executors.defaultThreadFactory()
         val poolExecutor: ThreadPoolExecutor = ThreadPoolExecutor(5, 10, 10_000,
-                TimeUnit.SECONDS, ArrayBlockingQueue<Runnable>(2), threadFactory)
+                TimeUnit.SECONDS, ArrayBlockingQueue<Runnable>(5), threadFactory)
 
         Worker(1, poolExecutor,  channel, queue, taskCount )
     }
